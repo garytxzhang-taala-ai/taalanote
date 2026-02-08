@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/proxy/volcengine': {
-        target: 'https://ark.cn-beijing.volces.com',
+      '/api/volcengine-proxy': {
+        target: 'https://ark.cn-beijing.volces.com/api/v3/images/generations',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/proxy\/volcengine/, '')
+        rewrite: (path) => ''
       }
     }
   }

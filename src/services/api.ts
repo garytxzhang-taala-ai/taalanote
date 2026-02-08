@@ -2,7 +2,7 @@ export const API_BASE_URL = import.meta.env.VITE_DEEPSEEK_BASE_URL || 'https://a
 export const API_KEY = import.meta.env.VITE_DEEPSEEK_API_KEY || '';
 
 export const VOLCENGINE_API_KEY = import.meta.env.VITE_VOLCENGINE_API_KEY || '30990ea2-2d47-44f7-9aa3-39dc6a44b636';
-export const VOLCENGINE_API_URL = '/api/proxy/volcengine';
+export const VOLCENGINE_PROXY_URL = '/api/volcengine-proxy';
 export const VOLCENGINE_IMAGE_MODEL = import.meta.env.VITE_VOLCENGINE_IMAGE_MODEL || 'doubao-seedream-4-5-251128';
 
 /**
@@ -123,9 +123,9 @@ export const generateImage = async (prompt: string): Promise<string> => {
   if (prompt.includes("比例: 3:4")) size = "1728x2304"; // 3:4 (3,981,312 pixels)
   else if (prompt.includes("比例: 16:9")) size = "2560x1440"; // 16:9 (3,686,400 pixels)
   // else 1:1 -> 1024x1024
-
+  
   try {
-    const response = await fetch(`${VOLCENGINE_API_URL}/api/v3/images/generations`, {
+    const response = await fetch(VOLCENGINE_PROXY_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${VOLCENGINE_API_KEY}`,

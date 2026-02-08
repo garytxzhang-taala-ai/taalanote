@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, TrendingUp, BarChart2, Video, FileText, RefreshCw, Zap, CheckCircle, ExternalLink } from 'lucide-react';
+import { X, Sparkles, TrendingUp, BarChart2, Video, FileText, Zap, CheckCircle, ExternalLink } from 'lucide-react';
 import { Topic, Task } from '../types';
 import { 
   mockHotspotTool, 
@@ -18,7 +18,7 @@ interface NewTaskModalProps {
   projectId: string;
 }
 
-export const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpen, onClose, onCreate, projectId }) => {
+export const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpen, onClose, onCreate }) => {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'analyzing' | 'selection'>('analyzing');
   const [hotspots, setHotspots] = useState<HotspotData[]>([]);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { PromptEvaluationResult } from '../services/api';
 
 interface PromptEvaluationProps {

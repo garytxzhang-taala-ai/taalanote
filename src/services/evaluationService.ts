@@ -53,8 +53,6 @@ export const generateEvaluationReport = async (
 
   // Analyze Preview Data
   const hasImage = !!previewData?.image;
-  const hasContent = !!previewData?.content;
-  const content = previewData?.content || '';
 
   // Determine Prompt Style
   let promptStyleType: 'comprehensive' | 'conversational' | 'mixed' = 'mixed';
@@ -80,10 +78,6 @@ export const generateEvaluationReport = async (
   });
 
   // Extract Mock Evidence from Content/Messages
-  const contentEvidence = hasContent 
-    ? [`检测到笔记包含 ${content.length} 字的正文。`, `检测到关键词覆盖：${task.title.substring(0, 4)}...`] 
-    : ['未检测到有效正文内容'];
-    
   const interactionEvidence = userMessages.length > 0 
     ? [`用户互动了 ${userMessages.length} 轮`, `平均指令长度 ${Math.floor(avgLength)} 字`] 
     : [];

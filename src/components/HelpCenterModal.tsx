@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Book, HelpCircle, FileText, Zap } from 'lucide-react';
+import { X, Book, HelpCircle, Zap } from 'lucide-react';
 
 interface HelpCenterModalProps {
   isOpen: boolean;

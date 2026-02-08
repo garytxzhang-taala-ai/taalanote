@@ -227,6 +227,8 @@ function App() {
                     <ChatArea 
                       onAddToPreview={setPreviewImage} 
                       onSwitchToImageGen={() => setViewMode('image-gen')}
+                      onUserMessage={handleUserMessage}
+                      onAssistantMessage={handleAssistantMessage}
                     />
                   ) : (
                     <ImageGenerator 

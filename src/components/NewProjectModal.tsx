@@ -105,6 +105,26 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({ isOpen, onClos
   // Proposal State
   const [proposal, setProposal] = useState<any>(null);
 
+  // Analysis Animation State
+  const [analysisStep, setAnalysisStep] = useState(0);
+  const analysisMessages = [
+    "正在连接小红书数据中心...",
+    "全网扫描近30天热门对标账号...",
+    "深度拆解高互动笔记结构模型...",
+    "结合您的愿景生成差异化定位...",
+    "正在生成最终运营策略方案..."
+  ];
+
+  useEffect(() => {
+    if (step === 'analysis') {
+      setAnalysisStep(0);
+      const interval = setInterval(() => {
+        setAnalysisStep(prev => (prev + 1) % analysisMessages.length);
+      }, 800); // Change message every 800ms
+      return () => clearInterval(interval);
+    }
+  }, [step]);
+
   useEffect(() => {
     if (isOpen) {
       setStep('info');
@@ -179,17 +199,21 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({ isOpen, onClos
   };
 
   // Step 3: Analysis & Proposal
-  const startAnalysis = () => {
-    setTimeout(async () => {
-      // Mock calling "Xiaohongshu Popular Tag Library Tool"
+  const startAnalysis = async () => {
+    // Minimum loading time to show the animation
+    const minWait = new Promise(resolve => setTimeout(resolve, 2000));
+    // Actual data fetching
+    const dataFetch = generateAIProposal(data);
+    
+    try {
+      const [_, proposalData] = await Promise.all([minWait, dataFetch]);
+      setProposal(proposalData);
       setStep('proposal');
-      await generateProposal();
-    }, 2000);
-  };
-
-  const generateProposal = async () => {
-    const proposalData = await generateAIProposal(data);
-    setProposal(proposalData);
+    } catch (error) {
+      console.error("Analysis failed", error);
+      // Fallback or error handling if needed
+      setStep('proposal'); // Try to show proposal anyway (mock data might be used inside generateAIProposal fallback)
+    }
   };
 
   const handleCreateProject = () => {
@@ -353,18 +377,40 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({ isOpen, onClos
           )}
 
           {step === 'analysis' && (
-            <div className="h-full flex flex-col items-center justify-center space-y-6">
+            <div className="h-full flex flex-col items-center justify-center space-y-8 animate-in fade-in duration-500">
               <div className="relative">
-                <div className="w-20 h-20 border-4 border-taala-100 border-t-taala-500 rounded-full animate-spin" />
+                <div className="w-24 h-24 border-4 border-taala-100 border-t-taala-500 rounded-full animate-spin" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Zap className="text-taala-500 fill-current" size={24} />
+                  <Zap className="text-taala-500 fill-current animate-pulse" size={32} />
                 </div>
               </div>
-              <div className="text-center space-y-2">
-                <h3 className="text-xl font-bold text-gray-800">正在调用「小红书爆款标签库」...</h3>
-                <p className="text-gray-500">分析近30天Top5对标账号</p>
-                <p className="text-gray-500">拆解高互动笔记结构</p>
-                <p className="text-gray-500">生成个性化定位方案</p>
+              
+              <div className="text-center space-y-4 max-w-md w-full px-6">
+                <h3 className="text-xl font-bold text-gray-800 h-8 flex items-center justify-center transition-all duration-300">
+                  {analysisMessages[analysisStep]}
+                </h3>
+                
+                {/* Progress Bar Simulation */}
+                <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden relative">
+                  <div className="absolute inset-0 bg-taala-500/20 w-full h-full"></div>
+                  <div className="bg-taala-500 h-full rounded-full w-1/3 absolute top-0 left-0 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                  <div className="bg-taala-500 h-full rounded-full w-full absolute top-0 left-0 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-3 mt-6">
+                    <div className={`flex flex-col items-center gap-2 transition-all duration-500 ${analysisStep >= 0 ? 'opacity-100' : 'opacity-30'}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs border ${analysisStep >= 0 ? 'bg-taala-50 border-taala-500 text-taala-600' : 'bg-gray-50 border-gray-200 text-gray-400'}`}>1</div>
+                        <span className="text-xs font-medium text-gray-600">数据采集</span>
+                    </div>
+                    <div className={`flex flex-col items-center gap-2 transition-all duration-500 ${analysisStep >= 2 ? 'opacity-100' : 'opacity-30'}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs border ${analysisStep >= 2 ? 'bg-taala-50 border-taala-500 text-taala-600' : 'bg-gray-50 border-gray-200 text-gray-400'}`}>2</div>
+                        <span className="text-xs font-medium text-gray-600">模型分析</span>
+                    </div>
+                    <div className={`flex flex-col items-center gap-2 transition-all duration-500 ${analysisStep >= 3 ? 'opacity-100' : 'opacity-30'}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs border ${analysisStep >= 3 ? 'bg-taala-50 border-taala-500 text-taala-600' : 'bg-gray-50 border-gray-200 text-gray-400'}`}>3</div>
+                        <span className="text-xs font-medium text-gray-600">策略生成</span>
+                    </div>
+                </div>
               </div>
             </div>
           )}

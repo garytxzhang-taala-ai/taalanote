@@ -65,7 +65,7 @@ export const PreviewArea: React.FC<PreviewAreaProps> = ({
   }, [task, isEmptyInitial]);
 
   return (
-  <div className="w-full h-full flex items-center justify-center bg-gray-100 overflow-hidden relative">
+  <div className="w-[400px] h-full bg-gray-100 border-l flex flex-col shrink-0 items-center py-6 overflow-y-auto relative">
     {task && onReviewTask && (
       <button 
         onClick={onReviewTask}

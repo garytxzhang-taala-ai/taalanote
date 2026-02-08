@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-taala-50: #fff7ed;
+  --color-taala-100: #ffedd5;
+  --color-taala-200: #fed7aa;
+  --color-taala-300: #fdba74;
+  --color-taala-400: #fb923c;
+  --color-taala-500: #EF7D1C;
+  --color-taala-600: #ea580c;
+  --color-taala-700: #c2410c;
+  --color-taala-800: #9a3412;
+  --color-taala-900: #7c2d12;
+  --color-taala-950: #431407;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}

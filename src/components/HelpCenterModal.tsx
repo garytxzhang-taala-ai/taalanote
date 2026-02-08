@@ -47,7 +47,7 @@ export const HelpCenterModal: React.FC<HelpCenterModalProps> = ({ isOpen, onClos
                <div className="grid grid-cols-2 gap-4 pt-2">
                  <div className="bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
                    <div className="font-semibold text-gray-900 mb-1">📝 智能写作</div>
-                   <div className="text-xs text-gray-500">基于 DeepSeek-V3 的强大模型，辅助生成标题、正文与脚本。</div>
+                   <div className="text-xs text-gray-500">基于专项训练的 AI，辅助生成标题、正文与脚本。</div>
                  </div>
                  <div className="bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
                    <div className="font-semibold text-gray-900 mb-1">🎨 配图生成</div>
